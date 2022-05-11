@@ -1,37 +1,27 @@
 package com.example.demo.controller;
 
-import com.example.demo.model.Employee;
-import com.example.demo.service.EmployeeService;
+import com.example.demo.entity.Car;
+import com.example.demo.service.CarService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
+@RestController
 @RequiredArgsConstructor
 public class MainController {
 
-    private EmployeeService service;
+    private final CarService service;
 
-    @RequestMapping(value = "/employee", method = RequestMethod.GET)
-    public ModelAndView showForm() {
-        return new ModelAndView("index", "employee", new Employee());
+    @RequestMapping(value = "/car", method = RequestMethod.GET)
+    public Iterable<Car> getAllCars() {
+        return service.getAllCars();
     }
 
-    @RequestMapping(value = "/addEmployee", method = RequestMethod.POST)
-    public String submit(@ModelAttribute("employee") Employee employee,
-                         BindingResult result, ModelMap model) {
-        if (result.hasErrors()) {
-            return "error";
-        }
-
-        service.saveEmployee(employee);
-
-        System.out.println(employee);
-        return "index";
+    @RequestMapping(value = "/car", method = RequestMethod.POST)
+    public Car saveCar(@RequestBody Car car) {
+        return service.saveCar(car);
     }
+
 }

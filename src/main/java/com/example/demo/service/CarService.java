@@ -6,6 +6,8 @@ import com.example.demo.repo.CarRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+
 @Service
 @RequiredArgsConstructor
 public class CarService {
@@ -23,6 +25,16 @@ public class CarService {
         }
 
         return repo.save(car);
+    }
+
+    @Transactional
+    public Car updateCar(Car carDomain) {
+
+        Car carInDb = repo.findCarByModel(carDomain.getModel())
+                .orElseThrow(() -> new RuntimeException("car not found"));
+
+        carInDb.setColor(carDomain.getColor());
+        return carInDb;
     }
 
 

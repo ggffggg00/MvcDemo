@@ -24,7 +24,7 @@ public class Car {
     @Column(name = "color")
     private String color;
 
-    @Column(name = "model")
+    @Column(name = "model", unique = true)
     private String model;
 
     @Column(name = "manufacturer")

@@ -24,4 +24,9 @@ public class MainController {
         return service.saveCar(car);
     }
 
+    @RequestMapping(value = "/car", method = RequestMethod.PUT)
+    public Car updateCar(@RequestBody Car car) {
+        return service.updateCar(car);
+    }
+
 }
